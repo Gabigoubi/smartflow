@@ -5,8 +5,8 @@ Sistema para resolver o gap de sincronização entre leads de revisão e agendam
 ## 📋 Checklist de Desenvolvimento
 
 ### Fase 1: Data Modeling (Modelagem do Ambiente)
-- [ ] Criar repositório privado no GitHub.
-- [ ] Escrever script `schema.sql` (Tabelas: Clientes, Agendamentos, Leads).
+- [✓] Criar repositório privado no GitHub.
+- [✓] Escrever script `schema.sql` (Tabelas: Clientes, Agendamentos, Leads).
 - [ ] Criar `docker-compose.yml` para subir o PostgreSQL no PC.
 - [ ] Popular banco com massa de teste (clientes com e sem agendamento).
 
