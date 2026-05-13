@@ -1,8 +1,8 @@
-# 🚀 Projeto Integrador: Gerador De Leads
+# Projeto Integrador: Gerador De Leads
 
 Sistema para resolver o gap de sincronização entre leads de revisão e agendamentos reais, utilizando uma arquitetura de microsserviços.
 
-## 📋 Checklist de Desenvolvimento
+## Checklist de Desenvolvimento
 
 ### Fase 1: Data Modeling (Modelagem do Ambiente)
 - [✓] Criar repositório privado no GitHub.
@@ -34,7 +34,7 @@ Sistema para resolver o gap de sincronização entre leads de revisão e agendam
 
 ---
 
-## 🛠️ Stack Técnica
+## Stack Técnica
 *   **Database:** PostgreSQL + Docker
 *   **Backend A:** Java + Spring Boot (Simulação de sistema de gestão)
 *   **Backend B:** Golang (Processamento de alta performance e concorrência)
