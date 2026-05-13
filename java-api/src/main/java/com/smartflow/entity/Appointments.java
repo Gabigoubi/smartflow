@@ -11,7 +11,7 @@ private Long id;
 @Column(name = "schedule_date", nullable = false)
 private LocalDateTime scheduleDate;
 @Column(name = "status", nullable = false)
-private String status;
+private String status = "AGENDADO";
 @ManyToOne
 @JoinColumn(name = "customer_id", nullable = false)
 private Customer customer;
