@@ -11,10 +11,10 @@ Sistema para resolver o gap de sincronização entre leads de revisão e agendam
 - [✓] Popular banco com massa de teste (clientes com e sem agendamento).
 
 ### Fase 2: Java-API (O Core do Negócio)
-- [ ] Setup do projeto Spring Boot (JPA, Postgres Driver, Web).
-- [ ] Mapear as Entities `Cliente` e `Agendamento`.
-- [ ] Criar os Repositories.
-- [ ] Implementar Controller com `POST /agendamentos` (Status: ABERTO).
+- [✓] Setup do projeto Spring Boot (JPA, Postgres Driver, Web).
+- [✓] Mapear as Entities `Cliente` e `Agendamento`.
+- [✓] Criar os Repositories.
+- [✓] Implementar Controller com `POST /agendamentos` (Status: ABERTO).
 
 ### Fase 3: Go-Worker (O Motor de Inteligência)
 - [ ] Setup do projeto Go e conexão com Postgres.
