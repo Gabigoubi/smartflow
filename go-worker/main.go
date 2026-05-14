@@ -1,3 +1,4 @@
+
 package main
 
 import (
@@ -6,12 +7,17 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 	"time"
 
+	// "github.com/joho/godotenv" // Descomente essa linha quando for para o PC
 	_ "github.com/lib/pq"
 )
 
 func main() {
+	// Quando estiver no PC e baixar o pacote, descomente a linha abaixo para ler o arquivo .env:
+	// godotenv.Load()
+
 	connStr := "user=root password=root dbname=smartflow host=localhost port=5432 sslmode=disable"
 
 	db, err := sql.Open("postgres", connStr)
@@ -34,10 +40,13 @@ func runWorker(db *sql.DB) {
 	ticker := time.NewTicker(1 * time.Minute)
 	defer ticker.Stop()
 
+	token := os.Getenv("TELEGRAM_TOKEN")
+	chatID := os.Getenv("TELEGRAM_CHAT_ID")
+
 	for range ticker.C {
 		fmt.Println("Buscando clientes....")
 		query := `
-		SELECT c.id, c.name, a.status, a.schedule_date
+		SELECT c.id, c.name, c.car_model, a.status, a.schedule_date
 		FROM customers c
 		LEFT JOIN appointments a ON c.id = a.customer_id
 		`
@@ -50,10 +59,11 @@ func runWorker(db *sql.DB) {
 		for rows.Next() {
 			var id int
 			var name string
+			var carModel string
 			var status sql.NullString
 			var scheduleDate sql.NullTime
 
-			err := rows.Scan(&id, &name, &status, &scheduleDate)
+			err := rows.Scan(&id, &name, &carModel, &status, &scheduleDate)
 			if err != nil {
 				fmt.Println("Erro ao extrair dados da linha: ", err)
 				continue
@@ -85,12 +95,28 @@ func runWorker(db *sql.DB) {
 
 			fmt.Printf("Cliente [%s] elegível -> LEAD CRIADO COM SUCESSO\n", name)
 
-			time.Sleep(100 * time.Millisecond)
-
 			_, err = db.Exec("INSERT INTO leads (customer_id, created_at) VALUES ($1, NOW())", id)
 			if err != nil {
 				fmt.Println("Erro ao salvar lead no banco: ", err)
 			}
+
+			formatedDate := "Sem registro"
+			if scheduleDate.Valid {
+				formatedDate = scheduleDate.Time.Format("02/01/2006")
+			}
+
+			mensage := fmt.Sprintf(
+				"🚨 CLIENTE EM PERÍODO DE REVISÃO - AGENDAR\n\n"+
+				"👤 Nome: %s\n"+
+				"🚗 Veículo: %s\n"+
+				"📅 Próxima Revisão: %s\n"+
+				"📱 Telefone: (11) 99999-9999", 
+				name, carModel, formatedDate,
+			)
+
+			go sendTelegramMessage(token, chatID, mensage)
+
+			time.Sleep(100 * time.Millisecond)
 		}
 		
 		rows.Close()
