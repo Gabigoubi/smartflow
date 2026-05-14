@@ -28,8 +28,8 @@ Sistema para resolver o gap de sincronização entre leads de revisão e agendam
 
 ### Fase 4: Mensageria (Integração Telegram & Rate Limit)
 - [✓] Criar Bot no Telegram via `@BotFather` e obter Token.
-- [ ] Criar rotina em Go para disparar mensagens HTTP para a API do Telegram.
-- [ ] Implementar o `time.Ticker` (100ms) para criar um gargalo de segurança (Rate Limit de 10 leads/segundo) protegendo a API do Telegram.
+- [✓] Criar rotina em Go para disparar mensagens HTTP para a API do Telegram.
+- [✓] Implementar o `time.Ticker` (100ms) para criar um gargalo de segurança (Rate Limit de 10 leads/segundo) protegendo a API do Telegram.
 
 ### Fase 5: Validação de QA e Stress Test (Gravação)
 - [ ] Injetar 300 clientes simulados no banco de dados para o Stress Test.
