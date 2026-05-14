@@ -1,3 +1,35 @@
+package main
+
+import (
+	"database/sql"
+	"fmt"
+	"log"
+	"net/http"
+	"net/url"
+	"time"
+
+	_ "github.com/lib/pq"
+)
+
+func main() {
+	connStr := "user=root password=root dbname=smartflow host=localhost port=5432 sslmode=disable"
+
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		log.Fatal("Erro fatal ao configurar o banco: ", err)
+	}
+	defer db.Close()
+
+	err = db.Ping()
+	if err != nil {
+		log.Fatal("O banco não respondeu ao chamado: ", err)
+	}
+
+	fmt.Println("Conexão com o PostgreSQL estabelecida com sucesso!")
+	
+	runWorker(db) 
+}
+
 func runWorker(db *sql.DB) {
 	ticker := time.NewTicker(1 * time.Minute)
 	defer ticker.Stop()
@@ -62,5 +94,24 @@ func runWorker(db *sql.DB) {
 		}
 		
 		rows.Close()
+	}
+}
+
+func sendTelegramMessage(token string, chatID string, text string) {
+	apiURL := fmt.Sprintf("https://api.telegram.org/bot%s/sendMessage", token)
+
+	data := url.Values{}
+	data.Set("chat_id", chatID)
+	data.Set("text", text)
+
+	resp, err := http.PostForm(apiURL, data)
+	if err != nil {
+		fmt.Println("Erro na rede ao tentar avisar o Telegram:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != 200 {
+		fmt.Printf("O Telegram recusou a mensagem. Código de erro: %d\n", resp.StatusCode)
 	}
 }
