@@ -18,16 +18,16 @@ Sistema para resolver o gap de sincronização entre leads de revisão e agendam
 
 ### Fase 3: Go-Worker (O Motor de Inteligência e Logs)
 - [✓] Setup do projeto Go e conexão com Postgres (`main.go` e `go.mod`).
-- [ ] Construir a Query de Filtro Inteligente avançada (Unir `NOT EXISTS` agendamento ativo + Validação de revisão nos últimos 90 dias).
-- [ ] Implementar o motor de varredura no Go com as regras de negócio.
-- [ ] Implementar sistema de Logs Visuais no terminal para o teste de gravação:
+- [✓] Construir a Query de Filtro Inteligente avançada (Unir `NOT EXISTS` agendamento ativo + Validação de revisão nos últimos 90 dias).
+- [✓] Implementar o motor de varredura no Go com as regras de negócio.
+- [✓] Implementar sistema de Logs Visuais no terminal para o teste de gravação:
   - *Log: "Cliente [X] já tem revisão agendada -> IGNORADO"*
   - *Log: "Cliente [X] já fez revisão há 90 dias -> IGNORADO"*
   - *Log: "Cliente [X] elegível -> LEAD CRIADO COM SUCESSO"*
-- [ ] Implementar proteção contra duplicidade (verificar tabela de leads nas últimas 24h).
+- [✓] Implementar proteção contra duplicidade (verificar tabela de leads nas últimas 24h).
 
 ### Fase 4: Mensageria (Integração Telegram & Rate Limit)
-- [ ] Criar Bot no Telegram via `@BotFather` e obter Token.
+- [✓] Criar Bot no Telegram via `@BotFather` e obter Token.
 - [ ] Criar rotina em Go para disparar mensagens HTTP para a API do Telegram.
 - [ ] Implementar o `time.Ticker` (100ms) para criar um gargalo de segurança (Rate Limit de 10 leads/segundo) protegendo a API do Telegram.
 
