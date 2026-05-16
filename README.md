@@ -32,9 +32,9 @@ Sistema para resolver o gap de sincronização entre leads de revisão e agendam
 - [✓] Implementar o `time.Ticker` (100ms) para criar um gargalo de segurança (Rate Limit de 10 leads/segundo) protegendo a API do Telegram.
 
 ### Fase 5: Validação de QA e Stress Test (Gravação)
-- [ ] Injetar 300 clientes simulados no banco de dados para o Stress Test.
-- [ ] Executar o Flow Positivo e Negativo (garantir que os bloqueios estão funcionando e printando no log).
-- [ ] Gravação Final: Rodar o projeto capturando o scroll do terminal no PC e a chegada simultânea em massa dos Leads no celular.
+- [✓] Injetar 300 clientes simulados no banco de dados para o Stress Test.
+- [✓] Executar o Flow Positivo e Negativo (garantir que os bloqueios estão funcionando e printando no log).
+- [✓] Gravação Final: Rodar o projeto capturando o scroll do terminal no PC e a chegada simultânea em massa dos Leads no celular.
 
 ---
 
