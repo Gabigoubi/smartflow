@@ -1,4 +1,3 @@
-
 package main
 
 import (
@@ -10,13 +9,12 @@ import (
 	"os"
 	"time"
 
-	// "github.com/joho/godotenv" // Descomente essa linha quando for para o PC
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
 func main() {
-	// Quando estiver no PC e baixar o pacote, descomente a linha abaixo para ler o arquivo .env:
-	// godotenv.Load()
+	godotenv.Load()
 
 	connStr := "user=root password=root dbname=smartflow host=localhost port=5432 sslmode=disable"
 
@@ -45,8 +43,8 @@ func runWorker(db *sql.DB) {
 
 	for range ticker.C {
 		fmt.Println("Buscando clientes....")
-		query := `
-		SELECT c.id, c.name, c.car_model, a.status, a.schedule_date
+	query := `
+		SELECT c.id, c.name, c.car_model, a.status, a.schedule_date, c.next_revision_date
 		FROM customers c
 		LEFT JOIN appointments a ON c.id = a.customer_id
 		`
@@ -57,13 +55,14 @@ func runWorker(db *sql.DB) {
 		}
 
 		for rows.Next() {
-			var id int
+		var id int
 			var name string
 			var carModel string
 			var status sql.NullString
 			var scheduleDate sql.NullTime
+			var nextRevision time.Time // <- NOVA VARIÁVEL
 
-			err := rows.Scan(&id, &name, &carModel, &status, &scheduleDate)
+			err := rows.Scan(&id, &name, &carModel, &status, &scheduleDate, &nextRevision) // <- ATUALIZADO
 			if err != nil {
 				fmt.Println("Erro ao extrair dados da linha: ", err)
 				continue
@@ -100,10 +99,7 @@ func runWorker(db *sql.DB) {
 				fmt.Println("Erro ao salvar lead no banco: ", err)
 			}
 
-			formatedDate := "Sem registro"
-			if scheduleDate.Valid {
-				formatedDate = scheduleDate.Time.Format("02/01/2006")
-			}
+	formatedDate := nextRevision.Format("02/01/2006")
 
 			mensage := fmt.Sprintf(
 				"🚨 CLIENTE EM PERÍODO DE REVISÃO - AGENDAR\n\n"+

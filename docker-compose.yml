@@ -1,17 +1,15 @@
-version: '3.8'
+version: "3.8"
 
 services:
   db:
-    image: postgres:15
-    container_name: concessionaria_db
+    image: postgres:latest
+    container_name: postgres_smartflow
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
       POSTGRES_DB: smartflow
     ports:
       - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
 
-volumes:
-  pgdata:
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/init.sql
