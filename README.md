@@ -43,3 +43,8 @@ Sistema para resolver o gap de sincronização entre leads de revisão e agendam
 * **Backend A:** Java + Spring Boot (Simulação de sistema de gestão)
 * **Backend B:** Golang (Processamento de alta performance e concorrência)
 * **Notificação:** Telegram Bot API
+
+* ## Demonstração do Projeto (Stress Test)
+* https://github.com/user-attachments/assets/21056cee-f8b0-42f7-bf88-5e0913d6bad1
+
+
